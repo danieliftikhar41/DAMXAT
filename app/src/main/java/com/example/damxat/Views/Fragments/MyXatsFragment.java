@@ -36,7 +36,7 @@ public class MyXatsFragment extends Fragment {
     DatabaseReference ref;
 
 
-
+ 
 
     public MyXatsFragment() {
         // Required empty public constructor
