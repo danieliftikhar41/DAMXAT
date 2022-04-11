@@ -103,12 +103,12 @@ public class GroupsFragment extends Fragment {
 
         ArrayList<XatGroup> arrayGroups = new ArrayList<>();
 
-        //Comentar
+        //Lee datos con objetos de escucha persistentes
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 arrayGroups.clear();
-                //Comentar
+                //obtenemos todos los groupos que existan en firabase
                 for(DataSnapshot snapshot: dataSnapshot.getChildren()){
                     XatGroup group = snapshot.getValue(XatGroup.class);
                      arrayGroups.add(group);

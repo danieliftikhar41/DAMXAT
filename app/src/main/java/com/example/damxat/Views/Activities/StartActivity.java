@@ -12,15 +12,15 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 public class StartActivity extends AppCompatActivity {
-
     FirebaseUser firebaseUser;
 
     @Override
     protected void onStart() {
         super.onStart();
-        //Comentar
+        //Obten el usuario con sesión activa
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         if(firebaseUser!=null){
+            //si usuario esta logeado
             Intent intent = new Intent(StartActivity.this, MainActivity.class);
             startActivity(intent);
         }
@@ -34,21 +34,21 @@ public class StartActivity extends AppCompatActivity {
         Button startLogin = findViewById(R.id.startLogin);
         Button startRegister = findViewById(R.id.startRegister);
 
-        //Comentar
+        //hace un aaccion cuando clicamos el botton
         startLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Comentar
+                //en este caso redirige hacia pantalla de login
                 Intent intentLogin = new Intent(StartActivity.this, LoginActivity.class);
                 startActivity(intentLogin);
             }
         });
 
-        //Comentar
+        //hace un aaccion cuando clicamos el botton
         startRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Comentar
+                //en este caso redirige hacia pantalla de Registro
                 Intent intentRegister = new Intent(StartActivity.this, RegisterActivity.class);
                 startActivity(intentRegister);
             }

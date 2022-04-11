@@ -35,10 +35,10 @@ public class RegisterActivity extends AppCompatActivity {
         EditText registerEmail = findViewById(R.id.registerEmail);
         EditText registerPassword = findViewById(R.id.registerPassword);
 
-        //Comentar
+        // inicializa la instancia de FirebaseAuth
         auth = FirebaseAuth.getInstance();
 
-        //Comentar
+        //hace un aaccion cuando clicamos el botton
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -46,7 +46,7 @@ public class RegisterActivity extends AppCompatActivity {
                 String email = registerEmail.getText().toString();
                 String password = registerPassword.getText().toString();
 
-                //Comentar
+                //daria un error en caso de si algun campo es nullo en caso contrario registra un usuario.
                 if(username.isEmpty() || email.isEmpty() || password.isEmpty()){
                     Toast.makeText(RegisterActivity.this, "All fields are required.", Toast.LENGTH_SHORT).show();
                 }else{
@@ -57,18 +57,18 @@ public class RegisterActivity extends AppCompatActivity {
         });
     }
 
-    //Comentar
+    //Registro de usuario
     public void registerUser(String username, String email, String password){
         auth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                    @Override
                    public void onComplete(@NonNull Task<AuthResult> task) {
-                       //Comentar
+                       //verifica si podemos registrar con email sino nos da un error
                         if(task.isSuccessful()){
                             FirebaseUser firebaseUser = auth.getCurrentUser();
                             String userId = firebaseUser.getUid();
 
-                            //Comentar
+                            //inserta datos en la tabla user
                             reference = FirebaseDatabase.getInstance().getReference("Users").child(userId);
 
                             User user = new User(userId, username, "offline");

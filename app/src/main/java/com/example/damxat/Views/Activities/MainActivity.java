@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
 
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MyXatsFragment()).commit();
 
-        //Comentar
+        //Obten el usuario con sesión activa
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void status(String status){
-        //Comentar
+        //get status of each user
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid());
 
         HashMap<String, Object> hashMap = new HashMap<>();
@@ -80,14 +80,14 @@ public class MainActivity extends AppCompatActivity {
         ref.updateChildren(hashMap);
     }
 
-    //Comentar
+    //method de canviar status online
     @Override
     protected void onResume(){
         super.onResume();
         status("online");
     }
 
-    //Comentar
+    //method de cambiar stauts offline
     @Override
     protected void onPause(){
         super.onPause();
@@ -101,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
-    //Comentar
+    //switch case MenuItem
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         Log.i("TESTMENU", "hola" + item.getItemId());

@@ -1,18 +1,26 @@
 package com.example.damxat.Views.Fragments;
 
+import android.Manifest;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.speech.RecognizerIntent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.damxat.Adapter.RecyclerXatAdapter;
@@ -31,6 +39,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Locale;
 
 public class XatFragment extends Fragment {
 
@@ -42,7 +51,8 @@ public class XatFragment extends Fragment {
     Boolean isXatUser;
     ArrayList<Xat> arrayXats;
     ArrayList<String> arrayUsers;
-
+    int RecordAudioRequestCode=0;
+    boolean PremisonUp=false;
     XatGroup group;
     String groupName;
 
@@ -58,8 +68,29 @@ public class XatFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_xat, container, false);
 
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        ImageButton btn= (ImageButton) view.findViewById(R.id.btnMic);
+        if(ContextCompat.checkSelfPermission(getContext(), Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED){
 
-        //Comentar
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                PremisonUp=false;
+
+            }
+        }else{
+            PremisonUp=true;
+        }
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(!PremisonUp){
+                    ActivityCompat.requestPermissions(getActivity(),new String[]{Manifest.permission.RECORD_AUDIO},RecordAudioRequestCode);
+
+                }else{
+
+                    reccord();
+                }
+            }
+
+        });
         bundle = getArguments();
 
         if(bundle.getString("type").equals("xatuser")){
@@ -93,16 +124,36 @@ public class XatFragment extends Fragment {
 
         return view;
     }
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == RecordAudioRequestCode && grantResults.length > 0 ){
+            if(grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                ImageButton btn= (ImageButton) view.findViewById(R.id.btnMic);
 
+                Toast.makeText(getContext(), "Permission Granted", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+    public void reccord(){
+        Intent speechRecognizerIntent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+        speechRecognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+        speechRecognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault());
+        speechRecognizerIntent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Hello What you want");
+        startActivityForResult(speechRecognizerIntent, RecordAudioRequestCode);
+    }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        ArrayList<String> result=data.getStringArrayListExtra( RecognizerIntent.EXTRA_RESULTS );
+        TextView txt=(TextView) view.findViewById(R.id.txtMessage);
+        txt.setText(result.get(0));
+    }
     //Comentar
     public void getUserXat(){
         if(getArguments()!=null) {
             userid = bundle.getString("user");
-
-            //Comentar
             ref = FirebaseDatabase.getInstance().getReference("Users").child(userid);
-
-            //Comentar
             ref.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -127,7 +178,6 @@ public class XatFragment extends Fragment {
 
 
     public void sendMessage(String sender, String message, boolean isXatUser){
-        //Comentar
         if(isXatUser==true){
             DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
 
@@ -165,7 +215,6 @@ public class XatFragment extends Fragment {
     public void readUserMessages(){
         arrayXats = new ArrayList<>();
 
-        //Comentar
         ref = FirebaseDatabase.getInstance().getReference("Xats");
 
         ref.addValueEventListener(new ValueEventListener() {
@@ -173,10 +222,9 @@ public class XatFragment extends Fragment {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 arrayXats.clear();
 
-                //Comentar
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     Xat xat = postSnapshot.getValue(Xat.class);
-                    //Comentar
+
                     if(xat.getReceiver().equals(userid) && xat.getSender().equals(firebaseUser.getUid()) ||
                             xat.getReceiver().equals(firebaseUser.getUid()) && xat.getSender().equals(userid)){
                         arrayXats.add(xat);
@@ -184,7 +232,6 @@ public class XatFragment extends Fragment {
                     }
                 }
 
-                //Comentar
                 updateRecycler();
             }
 
@@ -199,7 +246,7 @@ public class XatFragment extends Fragment {
 
     public void readGroupMessages(String groupName){
 
-        //Comentar
+        //obtenemos xat de grupo
         ref = FirebaseDatabase.getInstance().getReference("Groups").child(groupName);
 
         ref.addValueEventListener(new ValueEventListener() {
