@@ -3,6 +3,21 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/User/Documents/chatApp/damxat/app/src/main/res/layout/activity_login.xml" value="0.14537037037037037" />
+        <entry key="..\:/Users/User/Documents/chatApp/damxat/app/src/main/res/layout/activity_main.xml" value="0.14537037037037037" />
+        <entry key="..\:/Users/User/Documents/chatApp/damxat/app/src/main/res/layout/activity_register.xml" value="0.14537037037037037" />
+        <entry key="..\:/Users/User/Documents/chatApp/damxat/app/src/main/res/layout/activity_start.xml" value="0.14537037037037037" />
+        <entry key="..\:/Users/User/Documents/chatApp/damxat/app/src/main/res/layout/dialog_group.xml" value="0.14537037037037037" />
+        <entry key="..\:/Users/User/Documents/chatApp/damxat/app/src/main/res/layout/fragment_groups.xml" value="0.14537037037037037" />
+        <entry key="..\:/Users/User/Documents/chatApp/damxat/app/src/main/res/layout/fragment_my_xats.xml" value="0.14537037037037037" />
+        <entry key="..\:/Users/User/Documents/chatApp/damxat/app/src/main/res/layout/fragment_user.xml" value="0.14537037037037037" />
+        <entry key="..\:/Users/User/Documents/chatApp/damxat/app/src/main/res/layout/fragment_xat.xml" value="0.33" />
+        <entry key="..\:/Users/User/Documents/chatApp/damxat/app/src/main/res/layout/item_group.xml" value="0.14537037037037037" />
+        <entry key="..\:/Users/User/Documents/chatApp/damxat/app/src/main/res/layout/item_user.xml" value="0.14537037037037037" />
+        <entry key="..\:/Users/User/Documents/chatApp/damxat/app/src/main/res/layout/item_xat_left.xml" value="0.14537037037037037" />
+        <entry key="..\:/Users/User/Documents/chatApp/damxat/app/src/main/res/layout/item_xat_right.xml" value="0.14537037037037037" />
+        <entry key="..\:/Users/User/Documents/chatApp/damxat/app/src/main/res/menu/bottom_navigation.xml" value="0.14537037037037037" />
+        <entry key="..\:/Users/User/Documents/chatApp/damxat/app/src/main/res/menu/top_menu.xml" value="0.14537037037037037" />
         <entry key="..\:/Users/marta/AndroidStudioProjects/DAMXAT/app/src/main/res/drawable/background_xat_left.xml" value="0.14322916666666666" />
         <entry key="..\:/Users/marta/AndroidStudioProjects/DAMXAT/app/src/main/res/drawable/input.xml" value="0.1" />
       </map>
