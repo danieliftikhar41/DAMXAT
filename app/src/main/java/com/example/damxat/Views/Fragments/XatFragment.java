@@ -55,7 +55,7 @@ public class XatFragment extends Fragment {
     boolean PremisonUp=false;
     XatGroup group;
     String groupName;
-
+    String token;
     public XatFragment() {
         // Required empty public constructor
     }
@@ -107,14 +107,15 @@ public class XatFragment extends Fragment {
         ImageButton btnMessage = view.findViewById(R.id.btnMessage);
         EditText txtMessage = view.findViewById(R.id.txtMessage);
 
-        //Comentar
+        //botton de mandar mensaje
         btnMessage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String msg = txtMessage.getText().toString();
-
+                token = "fCfslGvqT6CYmG_ubPHGsC:APA91bGGfEVLdHa6i6c8hr-8K3ztS7DtWcSl45BvxhD-n_qvIThLK-5kE3V6lkr-_z9u2kch9CqJKNEKF-ShdydIeMTWVXnpMUanjmGSPvk42PQeLyczl-rXOTdosTy1LM5BhOBMwLlu";
                 if(!msg.isEmpty()){
                     sendMessage(firebaseUser.getUid(), msg, isXatUser);
+
                 }else{
                     Toast.makeText(getContext(), "You can't send empty message", Toast.LENGTH_SHORT).show();
                 }
